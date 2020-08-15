@@ -23,7 +23,7 @@ const api = {
         resolve(response.data);
       })
       .catch((error) => {
-        reject(errors);
+        reject(error);
       });
   }),
 
