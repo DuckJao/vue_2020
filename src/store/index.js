@@ -24,6 +24,29 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    getData(context) {
+      const source = 'http://localhost:8080/data/vuex.json'
+      fetch( source )
+        .then(
+          ( response ) => {
+            // 這裡response是一個 ReadableStream 的物件
+            // 使用不同資料類型使用對應方法，才能正確取得資料物件：blob()、json()、text()
+            // console.log( '###response:', response )
+
+            // json()將response改成json物件
+            return response.json() // 要用return才會往下丟不然下面沒東西
+          }
+        )
+        .then(
+          ( data ) => {
+            context.commit('SET_RESPONSE', data.res )
+            // this.json = JSON.parse( JSON.stringify( response ) )
+            // this.$store.commit('SET_RESPONSE', this.json.res)
+            // this.dataParser()
+
+          }
+        )
+    },
   },
 })
 
