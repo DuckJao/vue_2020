@@ -34,15 +34,7 @@ export default {
       this.dataParser()
       console.log('##component## router type: ', this.$route.meta.dataType)
     },
-    getData() {
-      const source = 'http://localhost:8080/data/vuex.json'
-      fetch(source).then((response) => response.json()).then((response) => {
-        this.json = JSON.parse(JSON.stringify(response))
-        this.$store.commit('SET_RESPONSE', this.json.res)
-        this.dataParser()
-        console.log('##get data: ', this.json.res)
-      })
-    },
+
     dataParser() {
       console.log('####', this.$store.state.res.type_1)
       const caseObj = {
@@ -54,9 +46,11 @@ export default {
     },
   },
   created() {
-    this.getData()
+    // 先發action請求非同步data
+    this.$store.dispatch('getData')
     console.log('router: ', this.$route)
     console.log('store type: ', this.$store.state.type)
+    console.log('res:', this.$store.state.res);
   },
 }
 </script>
